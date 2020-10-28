@@ -51,10 +51,10 @@ public class StackOverflowController {
                 .subscribe();
     }
 
-    @GetMapping("fluxWithSpring")
+    @GetMapping(path = "fluxWithSpring", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     private Flux<Integer> fluxWithSpring() {
         return Flux
-                .fromStream(Stream.generate(() -> new Random().nextInt()))
+				.fromStream(Stream.generate(() -> new Random().nextInt()))
                 .delayElements(Duration.ofMillis(500))
                 .doOnNext(System.out::println);
     }
