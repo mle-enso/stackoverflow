@@ -1,14 +1,11 @@
 package de.mle.stackoverflow.jackson;
 
-import java.time.Duration;
-import java.util.Random;
-import java.util.stream.Stream;
-
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import reactor.core.publisher.Flux;
+
+import java.time.Duration;
 
 @RestController
 public class JsonController {
@@ -17,14 +14,12 @@ public class JsonController {
         return "{ \"singleItemList\" : 3 }";
     }
 
-    @GetMapping(path = "/flux", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+    @GetMapping(path = "/flux")
     public Flux<Integer> getFlux() {
         Flux
                 .range(1, 100)
                 .delayElements(Duration.ofSeconds(1))
-                .subscribe(System.out::println);
-        return Flux
-                .fromStream(Stream.generate(() -> new Random().nextInt()))
-                .delayElements(Duration.ofMillis(500));
+                .subscribe(signal -> System.out.println("On the server in background: " + signal.intValue()));
+        return Flux.range(1, 100);
     }
 }
