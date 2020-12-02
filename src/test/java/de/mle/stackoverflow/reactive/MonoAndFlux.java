@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.util.Pair;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -13,6 +14,17 @@ import reactor.test.StepVerifier;
 @Slf4j
 public class MonoAndFlux {
     private Service service = new Service();
+
+    @Test
+    void flatMap() {
+        Flux<Integer> numbers = Flux.just(1, 2, 3);
+        Flux<String> xs = Flux.just("x");
+
+        numbers.flatMap(i ->
+            xs.map(x -> "Mapped to " + i + x)
+        )
+        .subscribe(System.out::println);
+    }
 
     @Test
     public void delayMono() {
