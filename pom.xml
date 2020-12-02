@@ -80,6 +80,18 @@
 		    <artifactId>spring-hateoas</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-streams</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+		</dependency>
+		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-test</artifactId>
 		</dependency>
@@ -229,6 +241,34 @@
 								<ports>
 									<port>27017:27017</port>
 								</ports>
+							</run>
+						</image>
+						<image>
+							<name>wurstmeister/zookeeper:latest</name>
+							<alias>zookeeper</alias>
+							<run>
+								<ports>
+									<port>2181:2181</port>
+								</ports>
+							</run>
+						</image>
+						<image>
+							<name>wurstmeister/kafka:1.0.0</name>
+							<alias>kafka</alias>
+							<run>
+								<ports>
+									<port>9092:9092</port>
+								</ports>
+								<links>
+									<link>zookeeper:zookeeper</link>
+								</links>
+								<env>
+									<KAFKA_ADVERTISED_HOST_NAME>127.0.0.1</KAFKA_ADVERTISED_HOST_NAME>
+									<KAFKA_ZOOKEEPER_CONNECT>zookeeper:2181</KAFKA_ZOOKEEPER_CONNECT>
+									<KAFKA_CREATE_TOPICS>
+										streams-json-input:1:1:compact,streams-json-output:1:1:compact
+									</KAFKA_CREATE_TOPICS>
+								</env>
 							</run>
 						</image>
 					</images>
