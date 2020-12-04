@@ -14,7 +14,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.actuate.metrics.AutoConfigureMetrics;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
@@ -24,8 +23,11 @@ import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.listener.MessageListener;
 import org.springframework.kafka.support.serializer.JsonSerializer;
+import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -37,22 +39,33 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
+
 @Slf4j
-@AutoConfigureMetrics
+//@AutoConfigureMetrics
 @ActiveProfiles("test")
-@ExtendWith(RestDocumentationExtension.class)
+@ExtendWith({ RestDocumentationExtension.class, SpringExtension.class })
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = {
         "spring.kafka.bootstrap-servers=localhost:9092" })
 public class IntegrationTestConfigWithPortAndTestProfile {
     private KafkaMessageListenerContainer<String, String> listenerContainer;
 
-    private final BlockingQueue<ConsumerRecord<String, String>> records = new LinkedBlockingQueue<>();
+    protected final BlockingQueue<ConsumerRecord<String, String>> records = new LinkedBlockingQueue<>();
 
     @Autowired
     protected ObjectMapper objectMapper;
+    @Autowired
+    protected WebTestClient webTestClient;
 
     @BeforeEach
-    public void init() {
+    public void init(RestDocumentationContextProvider restDocumentation) {
+        webTestClient = webTestClient.mutate()
+                .filter(documentationConfiguration(restDocumentation)
+                        .operationPreprocessors()
+                        .withResponseDefaults(prettyPrint())
+                        .withRequestDefaults(prettyPrint()))
+                .build();
         records.clear();
     }
 
@@ -152,7 +165,7 @@ public class IntegrationTestConfigWithPortAndTestProfile {
         var kafkaTemplate = new KafkaTemplate<>(producerFactory);
         kafkaTemplate.setDefaultTopic(topic);
         var partitions = kafkaTemplate.partitionsFor(topic); // init e. g. for leader preparation
-        log.debug("Partitions for testing queue: {}", partitions);
+        log.info("Partitions for testing queue: {}", partitions);
 
         kafkaTemplate.send(topic, key, msg).get(5, TimeUnit.SECONDS);
     }

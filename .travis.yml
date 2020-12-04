@@ -1,7 +1,5 @@
 language: java
 
-sudo: required # required by Docker
-
 install: true
 
 services:

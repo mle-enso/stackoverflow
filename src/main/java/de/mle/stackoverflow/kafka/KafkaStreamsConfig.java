@@ -44,6 +44,7 @@ public class KafkaStreamsConfig {
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, new JsonSerde<>(Test.class).getClass());
+        props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 5000);
         props.put(JsonDeserializer.KEY_DEFAULT_TYPE, String.class);
         props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, Test.class);
         return new KafkaStreamsConfiguration(props);
@@ -56,7 +57,6 @@ public class KafkaStreamsConfig {
                 .map((key, value) -> new KeyValue<String, Test>(value.key, value))
                 .groupByKey()
                 .reduce((v1, v2) -> {
-                    log.info("In reduce…");
                     v1.getWords().addAll(v2.getWords());
                     return v1;
                 }, Materialized.<String, Test, KeyValueStore<Bytes, byte[]>>as("streams-json-store"))

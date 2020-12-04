@@ -1,53 +1,26 @@
 package de.mle.stackoverflow;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
-import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
-
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
+import de.mle.stackoverflow.jackson.Project;
+import de.mle.stackoverflow.jackson.WorkPackageEstimateType;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.reactive.server.WebTestClient;
 
-import de.mle.stackoverflow.jackson.Project;
-import de.mle.stackoverflow.jackson.WorkPackageEstimateType;
+import java.util.List;
 
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 
-@ExtendWith({ RestDocumentationExtension.class, SpringExtension.class })
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class StackOverflowControllerIT {
+public class StackOverflowControllerIT extends IntegrationTestConfigWithPortAndTestProfile{
     @LocalServerPort
     private int port;
-    @Autowired
-    private WebTestClient webTestClient;
-
-    @BeforeEach
-    public void initRestDocs(RestDocumentationContextProvider restDocumentation) {
-        webTestClient = webTestClient.mutate()
-                .filter(documentationConfiguration(restDocumentation)
-                        .operationPreprocessors()
-                        .withResponseDefaults(prettyPrint())
-                        .withRequestDefaults(prettyPrint()))
-                .build();
-    }
 
     @Test
     public void documentRequestBodyArray() {

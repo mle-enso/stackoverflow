@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.0</version>
+		<version>2.3.6.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -24,6 +24,18 @@
 		<java.version>11</java.version>
 		<start-class>de.mle.stackoverflow.StackoverflowApplication</start-class>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Hoxton.SR9</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -78,6 +90,14 @@
 		<dependency>
 		    <groupId>org.springframework.hateoas</groupId>
 		    <artifactId>spring-hateoas</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-stream</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-stream-binder-kafka</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
@@ -253,7 +273,7 @@
 							</run>
 						</image>
 						<image>
-							<name>wurstmeister/kafka:1.0.0</name>
+							<name>wurstmeister/kafka:latest</name>
 							<alias>kafka</alias>
 							<run>
 								<ports>
@@ -266,7 +286,7 @@
 									<KAFKA_ADVERTISED_HOST_NAME>127.0.0.1</KAFKA_ADVERTISED_HOST_NAME>
 									<KAFKA_ZOOKEEPER_CONNECT>zookeeper:2181</KAFKA_ZOOKEEPER_CONNECT>
 									<KAFKA_CREATE_TOPICS>
-										streams-json-input:1:1:compact,streams-json-output:1:1:compact
+										streams-json-input:1:1:compact,streams-json-output:1:1:compact,first:1:1:compact,second:1:1:compact,test-streams-streams-json-store-repartition:1:1:compact
 									</KAFKA_CREATE_TOPICS>
 								</env>
 							</run>

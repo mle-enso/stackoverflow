@@ -1,14 +1,13 @@
 package de.mle.stackoverflow.elasticsearch;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import de.mle.stackoverflow.IntegrationTestConfigWithPortAndTestProfile;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 
-@SpringBootTest
-public class QueryIndexIT {
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class QueryIndexIT extends IntegrationTestConfigWithPortAndTestProfile {
     @Autowired
     private ProductRepository repo;
     @Autowired

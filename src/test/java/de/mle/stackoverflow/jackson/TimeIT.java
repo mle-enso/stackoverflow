@@ -1,18 +1,16 @@
 package de.mle.stackoverflow.jackson;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.mle.stackoverflow.IntegrationTestConfigWithPortAndTestProfile;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class TimeIT {
+public class TimeIT extends IntegrationTestConfigWithPortAndTestProfile {
     @Autowired
     private ObjectMapper mapper;
 

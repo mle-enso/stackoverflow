@@ -1,18 +1,16 @@
 package de.mle.stackoverflow.jackson;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.mle.stackoverflow.IntegrationTestConfigWithPortAndTestProfile;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class JsonControllerIT {
+public class JsonControllerIT extends IntegrationTestConfigWithPortAndTestProfile {
     @LocalServerPort
     private int port;
 
