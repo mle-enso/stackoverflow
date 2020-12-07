@@ -6,9 +6,8 @@ services:
   - docker
 
 script:
-  - mvn clean package | grep -v Download
   - docker-compose up -d
-  - mvn clean verify | grep -v Download
+  - mvn clean verify -Pdocker | grep -v Download
   - mvn clean package -Pbuild-for-docker -DskipTests | grep -v Download
   - docker build -t mleenso/stackoverflow .
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin

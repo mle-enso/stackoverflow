@@ -2,6 +2,7 @@ package de.mle.stackoverflow.kafka;
 
 import de.mle.stackoverflow.StackoverflowApplication;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.stream.binder.test.InputDestination;
 import org.springframework.cloud.stream.binder.test.OutputDestination;
@@ -18,6 +19,7 @@ public class CloudStreamTest {
         try (ConfigurableApplicationContext context = new SpringApplicationBuilder(
                 TestChannelBinderConfiguration.getCompleteConfiguration(
                         StackoverflowApplication.class))
+                .web(WebApplicationType.NONE)
                 .run("--spring.cloud.stream.function.definition=concatHash;concatStar")) {
             context.getBean(InputDestination.class);
 

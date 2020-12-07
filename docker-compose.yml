@@ -24,20 +24,20 @@ services:
       - "9200:9200"
       - "9300:9300"
     environment:
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - "cluster.name=docker-cluster"
-      - "discovery.type=single-node"
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      cluster.name: "docker-cluster"
+      discovery.type: "single-node"
   zookeeper:
     image: wurstmeister/zookeeper:latest
     ports:
       - "2181:2181"
   kafka:
-    image: wurstmeister/kafka:1.0.0
+    image: wurstmeister/kafka:latest
     ports:
       - "9092:9092"
     depends_on:
       - zookeeper
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: "kafka"
+      KAFKA_ADVERTISED_HOST_NAME: "127.0.0.1"
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
-      KAFKA_CREATE_TOPICS: "streams-json-input:1:1:compact,streams-json-output:1:1:compact,first:1:1:compact,second:1:1:compact,test-streams-streams-json-store-repartition:1:1:compact"
+      KAFKA_CREATE_TOPICS: "streams-json-input:1:1,streams-json-output:1:1,first:1:1,second:1:1,test-streams-streams-json-store-repartition:1:1"
