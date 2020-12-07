@@ -247,6 +247,7 @@
 							<name>elasticsearch:7.6.2</name>
 							<alias>elasticsearch</alias>
 							<run>
+								<stopMode>kill</stopMode>
 								<ports>
 									<port>9200:9200</port>
 									<port>9300:9300</port>
@@ -265,6 +266,7 @@
 							<name>mongo</name>
 							<alias>mongo</alias>
 							<run>
+								<stopMode>kill</stopMode>
 								<ports>
 									<port>27017:27017</port>
 								</ports>
@@ -274,6 +276,7 @@
 							<name>wurstmeister/zookeeper:latest</name>
 							<alias>zookeeper</alias>
 							<run>
+								<stopMode>kill</stopMode>
 								<ports>
 									<port>2181:2181</port>
 								</ports>
@@ -283,6 +286,7 @@
 							<name>wurstmeister/kafka:latest</name>
 							<alias>kafka</alias>
 							<run>
+								<stopMode>kill</stopMode>
 								<ports>
 									<port>9092:9092</port>
 								</ports>
@@ -292,6 +296,7 @@
 								<env>
 									<KAFKA_ADVERTISED_HOST_NAME>127.0.0.1</KAFKA_ADVERTISED_HOST_NAME>
 									<KAFKA_ZOOKEEPER_CONNECT>zookeeper:2181</KAFKA_ZOOKEEPER_CONNECT>
+									<KAFKA_AUTO_CREATE_TOPICS_ENABLE>true</KAFKA_AUTO_CREATE_TOPICS_ENABLE>
 									<KAFKA_CREATE_TOPICS>
 										streams-json-input:1:1:compact,streams-json-output:1:1:compact,first:1:1:compact,second:1:1:compact,test-streams-streams-json-store-repartition:1:1:compact
 									</KAFKA_CREATE_TOPICS>
