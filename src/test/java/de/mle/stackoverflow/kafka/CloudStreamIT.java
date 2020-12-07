@@ -5,6 +5,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +19,7 @@ public class CloudStreamIT extends IntegrationTestConfigWithPortAndTestProfile {
         // when the business code does its work
 
         // then
-        Awaitility.await().untilAsserted(() ->
+        Awaitility.await().atMost(Duration.ofSeconds(30)).untilAsserted(() ->
                 assertThat(records.stream()
                         .map(ConsumerRecord::value)
                         .filter(Objects::nonNull))
