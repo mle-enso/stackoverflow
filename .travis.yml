@@ -6,6 +6,7 @@ services:
   - docker
 
 script:
+  - mvn clean package | grep -v Download
   - docker-compose up -d
   - mvn clean verify -Pdocker | grep -v Download
   - mvn clean package -Pbuild-for-docker -DskipTests | grep -v Download
