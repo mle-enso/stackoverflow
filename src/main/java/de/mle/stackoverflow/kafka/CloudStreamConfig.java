@@ -29,4 +29,14 @@ public class CloudStreamConfig {
     public Consumer<String> consumer() {
         return i -> log.debug("Consumed {}", i);
     }
+
+    @Bean
+    public Function<String, String> concatHash() {
+        return value -> value.concat("#");
+    }
+
+    @Bean
+    public Function<String, String> concatStar() {
+        return value -> value.concat("*");
+    }
 }
