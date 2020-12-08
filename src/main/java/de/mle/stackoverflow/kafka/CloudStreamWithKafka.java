@@ -22,7 +22,7 @@ public class CloudStreamWithKafka {
 
     @Bean
     public Consumer<String> consumer() {
-        return i -> log.debug("Consumed {}", i);
+        return i -> log.info("Consumed {}", i);
     }
 
     @Bean
