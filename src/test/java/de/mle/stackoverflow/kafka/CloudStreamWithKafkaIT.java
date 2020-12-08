@@ -10,19 +10,22 @@ import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CloudStreamIT extends IntegrationTestConfigWithPortAndTestProfile {
+public class CloudStreamWithKafkaIT extends IntegrationTestConfigWithPortAndTestProfile {
     @Test
     void producerProcessorConsumer() {
         // given
         initTestQueueReceiverForTopic("second");
 
-        // when the business code does its work
+        // when
+        sendMessage(1, "number1", "first");
+        sendMessage(2, "number2", "first");
+        sendMessage(3, "number3", "first");
 
         // then
-        Awaitility.await().atMost(Duration.ofSeconds(30)).untilAsserted(() ->
+        Awaitility.await().untilAsserted(() ->
                 assertThat(records.stream()
                         .map(ConsumerRecord::value)
                         .filter(Objects::nonNull))
-                        .hasSizeGreaterThan(5));
+                        .contains("1", "4", "9"));
     }
 }

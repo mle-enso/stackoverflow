@@ -298,7 +298,7 @@
 									<KAFKA_ZOOKEEPER_CONNECT>zookeeper:2181</KAFKA_ZOOKEEPER_CONNECT>
 									<KAFKA_AUTO_CREATE_TOPICS_ENABLE>true</KAFKA_AUTO_CREATE_TOPICS_ENABLE>
 									<KAFKA_CREATE_TOPICS>
-										streams-json-input:1:1:compact,streams-json-output:1:1:compact,first:1:1:compact,second:1:1:compact,test-streams-streams-json-store-repartition:1:1:compact
+										first:1:1:compact,second:1:1:compact
 									</KAFKA_CREATE_TOPICS>
 								</env>
 							</run>

@@ -41,4 +41,4 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: "127.0.0.1"
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
-      KAFKA_CREATE_TOPICS: "streams-json-input:1:1,streams-json-output:1:1,first:1:1,second:1:1,test-streams-streams-json-store-repartition:1:1"
+      KAFKA_CREATE_TOPICS: "first:1:1:compact,second:1:1:compact"

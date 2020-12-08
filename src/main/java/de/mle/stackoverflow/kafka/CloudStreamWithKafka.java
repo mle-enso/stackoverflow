@@ -12,12 +12,7 @@ import java.util.function.Supplier;
 
 @Slf4j
 @Configuration
-public class CloudStreamConfig {
-    @Bean
-    public Supplier<Flux<Long>> producer() {
-        return () -> Flux.interval(Duration.ofMillis(500));
-    }
-
+public class CloudStreamWithKafka {
     @Bean
     public Function<Flux<Long>, Flux<String>> processor() {
         return longFlux -> longFlux
