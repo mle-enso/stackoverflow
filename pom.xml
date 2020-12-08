@@ -283,7 +283,7 @@
 							</run>
 						</image>
 						<image>
-							<name>wurstmeister/kafka:latest</name>
+							<name>wurstmeister/kafka:2.12-2.5.0</name>
 							<alias>kafka</alias>
 							<run>
 								<stopMode>kill</stopMode>
