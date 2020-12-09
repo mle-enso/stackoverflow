@@ -6,12 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.Serializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.listener.MessageListener;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
@@ -46,9 +45,8 @@ import static org.springframework.restdocs.webtestclient.WebTestClientRestDocume
 @Slf4j
 //@AutoConfigureMetrics
 @ActiveProfiles("test")
-@ExtendWith({ RestDocumentationExtension.class, SpringExtension.class })
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = {
-        "spring.kafka.bootstrap-servers=localhost:9092" })
+@ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class IntegrationTestConfigWithPortAndTestProfile {
     private KafkaMessageListenerContainer<String, String> listenerContainer;
 
@@ -59,8 +57,13 @@ public class IntegrationTestConfigWithPortAndTestProfile {
     @Autowired
     protected WebTestClient webTestClient;
 
+    private KafkaTemplate<String, Object> kafkaTemplate;
+
+    @SneakyThrows
     @BeforeEach
     public void init(RestDocumentationContextProvider restDocumentation) {
+        initKafka();
+
         webTestClient = webTestClient.mutate()
                 .filter(documentationConfiguration(restDocumentation)
                         .operationPreprocessors()
@@ -75,6 +78,17 @@ public class IntegrationTestConfigWithPortAndTestProfile {
         if (listenerContainer != null) {
             listenerContainer.stop();
         }
+    }
+
+    private void initKafka() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+
+        DefaultKafkaProducerFactory<String, Object> producerFactory = new DefaultKafkaProducerFactory<>(props);
+        producerFactory.setKeySerializer(new StringSerializer());
+        producerFactory.setValueSerializer(new JsonSerializer<>(objectMapper));
+
+        kafkaTemplate = new KafkaTemplate<>(producerFactory);
     }
 
     protected void initTestQueueReceiverForTopic(String topic) {
@@ -145,29 +159,8 @@ public class IntegrationTestConfigWithPortAndTestProfile {
         return result.get();
     }
 
-    protected void sendMessage(Object msg, String key, String topic) {
-        var serializer = new JsonSerializer<>(objectMapper);
-        sendMessageInternally(msg, key, topic, serializer);
-    }
-
-    protected void sendAsStringMessage(String msg, String key, String topic) {
-        sendMessageInternally(msg, key, topic, new StringSerializer());
-    }
-
     @SneakyThrows
-    private <M> void sendMessageInternally(M msg, String key, String topic, Serializer<M> serializer) {
-        Map<String, Object> props = new HashMap<>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-
-        DefaultKafkaProducerFactory<String, M> producerFactory = new DefaultKafkaProducerFactory<>(props);
-        producerFactory.setKeySerializer(new StringSerializer());
-        producerFactory.setValueSerializer(serializer);
-
-        var kafkaTemplate = new KafkaTemplate<>(producerFactory);
-        kafkaTemplate.setDefaultTopic(topic);
-        var partitions = kafkaTemplate.partitionsFor(topic); // init e. g. for leader preparation
-        log.info("Partitions for testing queue: {}", partitions);
-
-        kafkaTemplate.send(topic, key, msg).get(5, TimeUnit.SECONDS);
+    protected SendResult<String, Object> sendMessage(Object msg, String key, String topic) {
+        return kafkaTemplate.send(topic, key, msg).get(5, TimeUnit.SECONDS);
     }
 }

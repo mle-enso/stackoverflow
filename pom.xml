@@ -296,10 +296,6 @@
 								<env>
 									<KAFKA_ADVERTISED_HOST_NAME>127.0.0.1</KAFKA_ADVERTISED_HOST_NAME>
 									<KAFKA_ZOOKEEPER_CONNECT>zookeeper:2181</KAFKA_ZOOKEEPER_CONNECT>
-									<KAFKA_AUTO_CREATE_TOPICS_ENABLE>true</KAFKA_AUTO_CREATE_TOPICS_ENABLE>
-									<KAFKA_CREATE_TOPICS>
-										first:1:1:compact,second:1:1:compact
-									</KAFKA_CREATE_TOPICS>
 								</env>
 							</run>
 						</image>

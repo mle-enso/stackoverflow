@@ -5,23 +5,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import reactor.core.publisher.Flux;
 
-import java.time.Duration;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 @Slf4j
 @Configuration
 public class CloudStreamWithKafka {
     @Bean
-    public Function<Flux<Long>, Flux<String>> processor() {
+    public Function<Flux<Long>, Flux<SquareNumber>> processor() {
         return longFlux -> longFlux
                 .map(i -> i * i)
-                .map(Object::toString);
+                .map(SquareNumber::new);
     }
 
     @Bean
-    public Consumer<String> consumer() {
+    public Consumer<SquareNumber> consumer() {
         return i -> log.info("Consumed {}", i);
     }
 

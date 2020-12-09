@@ -1,11 +1,12 @@
 package de.mle.stackoverflow.kafka;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.mle.stackoverflow.IntegrationTestConfigWithPortAndTestProfile;
+import lombok.SneakyThrows;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
 import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +26,13 @@ public class CloudStreamWithKafkaIT extends IntegrationTestConfigWithPortAndTest
         Awaitility.await().untilAsserted(() ->
                 assertThat(records.stream()
                         .map(ConsumerRecord::value)
-                        .filter(Objects::nonNull))
-                        .contains("1", "4", "9"));
+                        .filter(Objects::nonNull)
+                        .map(this::parseValue))
+                        .contains(new SquareNumber(1), new SquareNumber(4), new SquareNumber(9)));
+    }
+
+    @SneakyThrows
+    private SquareNumber parseValue(String v) {
+        return new ObjectMapper().readValue(v, SquareNumber.class);
     }
 }
