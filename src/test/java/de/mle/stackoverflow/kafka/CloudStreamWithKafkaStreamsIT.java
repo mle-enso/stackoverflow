@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CloudStreamWithKafkaStreamsIT extends IntegrationTestConfigWithPortAndTestProfile {
     @Test
     @Disabled
-    void producerProcessorConsumer() {
+    void process() {
         // given
         initTestQueueReceiverForTopic("counts");
 
