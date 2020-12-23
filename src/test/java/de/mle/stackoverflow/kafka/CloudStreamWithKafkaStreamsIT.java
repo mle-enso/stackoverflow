@@ -25,7 +25,7 @@ public class CloudStreamWithKafkaStreamsIT extends IntegrationTestConfigWithPort
         sendMessage(new Words(List.of("Auto", "Auto", "Wort")), null, "words");
         Thread.sleep(6_000);
         sendMessage(new Words(List.of("Auto", "Affe")), null, "words");
-       // sendMessage("peng", null, "words");
+        // sendMessage("peng", null, "words");
 
         // then
         Awaitility.await().untilAsserted(() ->

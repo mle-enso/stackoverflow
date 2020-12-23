@@ -1,0 +1,3 @@
+spring.cloud.stream.kafka.streams.binder:
+  autoCreateTopics: true
+  autoAddPartitions: true
