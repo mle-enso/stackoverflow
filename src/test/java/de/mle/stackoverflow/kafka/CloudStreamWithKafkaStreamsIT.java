@@ -7,6 +7,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -20,10 +21,11 @@ public class CloudStreamWithKafkaStreamsIT extends IntegrationTestConfigWithPort
         initTestQueueReceiverForTopic("counts");
 
         // when
-        sendMessage("Wort Buch Wort", null, "words");
-        sendMessage("Auto Auto Wort", null, "words");
+        sendMessage(new Words(List.of("Wort", "Buch", "Wort")), null, "words");
+        sendMessage(new Words(List.of("Auto", "Auto", "Wort")), null, "words");
         Thread.sleep(6_000);
-        sendMessage("Auto Affe", null, "words");
+        sendMessage(new Words(List.of("Auto", "Affe")), null, "words");
+       // sendMessage("peng", null, "words");
 
         // then
         Awaitility.await().untilAsserted(() ->
@@ -35,14 +37,12 @@ public class CloudStreamWithKafkaStreamsIT extends IntegrationTestConfigWithPort
                 )
                         .containsExactlyInAnyOrder(
                                 // from first time window
-                                new WordCount("", 2l),
-                                new WordCount("buch", 1l),
-                                new WordCount("auto", 2l),
-                                new WordCount("wort", 3l),
+                                new WordCount("Buch", 1l),
+                                new WordCount("Auto", 2l),
+                                new WordCount("Wort", 3l),
                                 // from second time window
-                                new WordCount("", 1l),
-                                new WordCount("auto", 1l),
-                                new WordCount("affe", 1l)
+                                new WordCount("Auto", 1l),
+                                new WordCount("Affe", 1l)
                                 ));
     }
 

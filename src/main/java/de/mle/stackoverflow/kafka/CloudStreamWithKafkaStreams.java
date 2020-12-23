@@ -12,14 +12,15 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 
 @Configuration
 public class CloudStreamWithKafkaStreams {
     @Bean
-    public Function<KStream<Bytes, String>, KStream<Bytes, WordCount>> process() {
+    public Function<KStream<Bytes, Words>, KStream<Bytes, WordCount>> process() {
         return input -> input
-                .flatMapValues(value -> Arrays.asList(value.toLowerCase().split("\\W+")))
+                .flatMapValues(value -> value.getWords())
                 .map((key, value) -> new KeyValue<>(value, value))
                 .groupByKey(Grouped.with(Serdes.String(), Serdes.String()))
                 .windowedBy(TimeWindows.of(Duration.ofSeconds(5)))
