@@ -13,6 +13,8 @@ spring.data.elasticsearch:
   cluster-name: docker-cluster
 
 spring.kafka.producer.properties.spring.json.add.type.headers: false
+spring.kafka.consumer.properties.spring.json.trusted.packages: '*'
+spring.json.trusted.packages: '*'
 
 spring.cloud.stream:
   function.definition: processor;consumer;concatHash;concatStar;process
@@ -22,7 +24,14 @@ spring.cloud.stream:
     consumer-in-0.destination: second
     process-in-0.destination: words
     process-out-0.destination: counts
-  kafka.streams.binder:
-    autoCreateTopics: false
-    configuration:
-      commit.interval.ms: 1000
+  kafka.default.consumer.trustedPackages: '*'
+  kafka.streams:
+    default.consumer:
+  #    valueSerde: org.springframework.kafka.support.serializer.JsonSerde
+      trustedPackages: '*'
+      deserializationExceptionHandler: sendToDlq
+    binder:
+      autoCreateTopics: false
+      deserializationExceptionHandler: sendToDlq
+      configuration:
+        commit.interval.ms: 1000

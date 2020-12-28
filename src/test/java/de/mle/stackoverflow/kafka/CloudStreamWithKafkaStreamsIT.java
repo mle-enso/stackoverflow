@@ -25,7 +25,7 @@ public class CloudStreamWithKafkaStreamsIT extends IntegrationTestConfigWithPort
         sendMessage(new Words(List.of("Auto", "Auto", "Wort")), null, "words");
         Thread.sleep(6_000);
         sendMessage(new Words(List.of("Auto", "Affe")), null, "words");
-        // sendMessage("peng", null, "words");
+        sendMessage(List.of(1, 2, 3), null, "words");
 
         // then
         Awaitility.await().untilAsserted(() ->
@@ -44,6 +44,8 @@ public class CloudStreamWithKafkaStreamsIT extends IntegrationTestConfigWithPort
                                 new WordCount("Auto", 1l),
                                 new WordCount("Affe", 1l)
                                 ));
+
+        // assert dlq
     }
 
     @SneakyThrows
