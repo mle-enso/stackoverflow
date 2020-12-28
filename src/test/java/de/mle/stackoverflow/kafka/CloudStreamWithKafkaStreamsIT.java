@@ -27,6 +27,7 @@ public class CloudStreamWithKafkaStreamsIT extends IntegrationTestConfigWithPort
         sendMessage(new Words(List.of("Auto", "Affe")), null, "words");
         sendMessage(new WordCount("Fehler", 999l), null, "words");
         sendMessage(List.of(1, 2, 3), null, "words");
+        sendMessage(new Words(List.of("Bär", "Affe")), null, "words");
 
         // then
         Awaitility.await().untilAsserted(() ->
@@ -43,7 +44,8 @@ public class CloudStreamWithKafkaStreamsIT extends IntegrationTestConfigWithPort
                                 new WordCount("Wort", 3l),
                                 // from second time window
                                 new WordCount("Auto", 1l),
-                                new WordCount("Affe", 1l)
+                                new WordCount("Affe", 2l),
+                                new WordCount("Bär", 1l)
                                 ));
 
         initTestQueueReceiverForTopic("error.words.stackoverflow");
