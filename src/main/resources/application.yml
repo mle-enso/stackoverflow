@@ -12,9 +12,8 @@ spring.data.elasticsearch:
   cluster-nodes: localhost:9300
   cluster-name: docker-cluster
 
-spring.kafka.producer.properties.spring.json.add.type.headers: false
-spring.kafka.consumer.properties.spring.json.trusted.packages: '*'
-spring.json.trusted.packages: '*'
+spring.json.remove.type.headers: true
+spring.json.use.type.headers: false
 
 spring.cloud.stream:
   function.definition: processor;consumer;concatHash;concatStar;process
@@ -27,11 +26,8 @@ spring.cloud.stream:
   kafka.default.consumer.trustedPackages: '*'
   kafka.streams:
     default.consumer:
-  #    valueSerde: org.springframework.kafka.support.serializer.JsonSerde
-      trustedPackages: '*'
       deserializationExceptionHandler: sendToDlq
     binder:
       autoCreateTopics: false
-      deserializationExceptionHandler: sendToDlq
       configuration:
         commit.interval.ms: 1000

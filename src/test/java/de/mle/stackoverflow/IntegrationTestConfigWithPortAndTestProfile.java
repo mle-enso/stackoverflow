@@ -87,7 +87,9 @@ public class IntegrationTestConfigWithPortAndTestProfile {
 
         DefaultKafkaProducerFactory<String, Object> producerFactory = new DefaultKafkaProducerFactory<>(props);
         producerFactory.setKeySerializer(new StringSerializer());
-        producerFactory.setValueSerializer(new JsonSerializer<>(objectMapper));
+        JsonSerializer<Object> valueSerializer = new JsonSerializer<>(objectMapper);
+        valueSerializer.setAddTypeInfo(false);
+        producerFactory.setValueSerializer(valueSerializer);
 
         kafkaTemplate = new KafkaTemplate<>(producerFactory);
     }
@@ -107,8 +109,8 @@ public class IntegrationTestConfigWithPortAndTestProfile {
         var cf = new DefaultKafkaConsumerFactory<String, String>(props);
         ContainerProperties containerProps = new ContainerProperties(topic);
         containerProps.setMissingTopicsFatal(false);
+        records.clear();
         listenerContainer = new KafkaMessageListenerContainer<>(cf, containerProps);
-
         listenerContainer.setupMessageListener(new MessageRecorder());
         listenerContainer.setBeanName("beanForTopic-" + topic);
         listenerContainer.start();

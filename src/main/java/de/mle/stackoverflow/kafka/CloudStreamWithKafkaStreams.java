@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -20,7 +19,7 @@ public class CloudStreamWithKafkaStreams {
     @Bean
     public Function<KStream<Bytes, Words>, KStream<Bytes, WordCount>> process() {
         return input -> input
-                .flatMapValues(value -> value.getWords())
+                .flatMapValues(value -> value.getWords() != null ? value.getWords() : List.of())
                 .map((key, value) -> new KeyValue<>(value, value))
                 .groupByKey(Grouped.with(Serdes.String(), Serdes.String()))
                 .windowedBy(TimeWindows.of(Duration.ofSeconds(5)))

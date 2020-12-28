@@ -25,6 +25,7 @@ public class CloudStreamWithKafkaStreamsIT extends IntegrationTestConfigWithPort
         sendMessage(new Words(List.of("Auto", "Auto", "Wort")), null, "words");
         Thread.sleep(6_000);
         sendMessage(new Words(List.of("Auto", "Affe")), null, "words");
+        sendMessage(new WordCount("Fehler", 999l), null, "words");
         sendMessage(List.of(1, 2, 3), null, "words");
 
         // then
@@ -45,7 +46,16 @@ public class CloudStreamWithKafkaStreamsIT extends IntegrationTestConfigWithPort
                                 new WordCount("Affe", 1l)
                                 ));
 
-        // assert dlq
+        initTestQueueReceiverForTopic("error.words.stackoverflow");
+        Awaitility.await().untilAsserted(() ->
+                assertThat(records.stream()
+                        .map(ConsumerRecord::value)
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList())
+                )
+                        .containsExactlyInAnyOrder(
+                                "[1,2,3]"
+                        ));
     }
 
     @SneakyThrows
