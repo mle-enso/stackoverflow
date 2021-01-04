@@ -15,13 +15,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .antMatchers("/", "/login", "/logout", "/actuator/**", "/stack/**", "/json", "/flux").permitAll()
+                        .antMatchers("/", "/login", "/logout", "/authorize/**", "/actuator/**", "/stack/**", "/json", "/flux").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf().disable()
                 .logout()
-                .logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler())
-                //.logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
