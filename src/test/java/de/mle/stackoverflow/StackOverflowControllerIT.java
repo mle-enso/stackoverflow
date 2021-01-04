@@ -18,7 +18,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 
-public class StackOverflowControllerIT extends IntegrationTestConfigWithPortAndTestProfile{
+public class StackOverflowControllerIT extends IntegrationTestConfigWithPortAndTestProfile {
     @LocalServerPort
     private int port;
 
@@ -26,9 +26,9 @@ public class StackOverflowControllerIT extends IntegrationTestConfigWithPortAndT
     public void documentRequestBodyArray() {
         webTestClient
                 .post()
-                .uri("/contract")
+                .uri("/stack/contract")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .syncBody(List.of(new MessageContract("one"), new MessageContract("two")))
+                .bodyValue(List.of(new MessageContract("one"), new MessageContract("two")))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -43,7 +43,7 @@ public class StackOverflowControllerIT extends IntegrationTestConfigWithPortAndT
         RestAssured.given()
                 .baseUri("http://localhost:" + port)
                 .accept(ContentType.JSON)
-                .get("/jsonFile")
+                .get("/stack/jsonFile")
                 .then()
                 .statusCode(200)
                 .body("al.findIndexOf { it.aid == 1461 }", is(2))
@@ -59,7 +59,7 @@ public class StackOverflowControllerIT extends IntegrationTestConfigWithPortAndT
         Project project = RestAssured.given()
                 .baseUri("http://localhost:" + port)
                 .accept(ContentType.JSON)
-                .get("/deserialize")
+                .get("/stack/deserialize")
                 .body().as(Project.class);
 
         assertThat(project.getEstimateType()).isEqualTo(WorkPackageEstimateType.WEEK);

@@ -7,6 +7,9 @@ management:
 spring:
   application.name: stackoverflow
   jackson.serialization.write_dates_as_timestamps: false
+  security.oauth2.client.registration.github:
+    client-id: 74f1d32e8e1dac50232c
+    client-secret: d9bb3d89607c6ebeb52b66fbd44d52b6a0496943
   data.elasticsearch:
     repositories.enbled: true
     cluster-nodes: localhost:9300

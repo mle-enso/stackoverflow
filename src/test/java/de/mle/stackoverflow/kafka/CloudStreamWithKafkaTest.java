@@ -19,7 +19,7 @@ public class CloudStreamWithKafkaTest {
         try (ConfigurableApplicationContext context = new SpringApplicationBuilder(
                 TestChannelBinderConfiguration.getCompleteConfiguration(
                         StackoverflowApplication.class))
-                .web(WebApplicationType.NONE)
+                .web(WebApplicationType.SERVLET)
                 .run("--spring.cloud.stream.function.definition=concatHash;concatStar")) {
             context.getBean(InputDestination.class);
 

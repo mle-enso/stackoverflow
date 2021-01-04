@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.actuate.metrics.AutoConfigureMetrics;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -29,6 +30,7 @@ import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -53,10 +55,14 @@ public class IntegrationTestConfigWithPortAndTestProfile {
 
     protected final BlockingQueue<ConsumerRecord<String, String>> records = new LinkedBlockingQueue<>();
 
+    @LocalServerPort
+    private int port;
+
     @Autowired
     protected ObjectMapper objectMapper;
     @Autowired
     protected WebTestClient webTestClient;
+    protected WebClient webClient;
 
     private KafkaTemplate<String, Object> kafkaTemplate;
 
@@ -64,7 +70,7 @@ public class IntegrationTestConfigWithPortAndTestProfile {
     @BeforeEach
     public void init(RestDocumentationContextProvider restDocumentation) {
         initKafka();
-
+        webClient = WebClient.builder().baseUrl("http://localhost:" + port).build();
         webTestClient = webTestClient.mutate()
                 .filter(documentationConfiguration(restDocumentation)
                         .operationPreprocessors()

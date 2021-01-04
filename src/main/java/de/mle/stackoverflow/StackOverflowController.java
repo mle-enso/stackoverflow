@@ -21,28 +21,28 @@ import reactor.core.publisher.Flux;
 public class StackOverflowController {
 	private static final String JSON_FILE = StackOverflowController.class.getResource("/jsonFile.json").getFile();
 
-	@GetMapping("/jsonFile")
+	@GetMapping("/stack/jsonFile")
 	public String getJsonFile() throws IOException {
 		return FileUtils.readFileToString(new File(JSON_FILE), "UTF-8");
 	}
 
-	@GetMapping("/link")
+	@GetMapping("/stack/link")
 	public ResponseEntity<String> link(@RequestParam(required = false) String param) throws IOException {
 		return ResponseEntity.ok(param);
 	}
 
-	@GetMapping("/deserialize")
+	@GetMapping("/stack/deserialize")
 	public ResponseEntity<String> getProject() {
 		String content = "{\"projectId\":9,\"workspaceId\":74,\"projectName\":\"Test Project 1dea0d3e-4bba-4cc2-ace3-77dede4990d5\",\"phases\":[],\"estimateType\":{\"name\":\"WEEK\",\"displayName\":\"Weeks\",\"id\":2}}";
 		return ResponseEntity.ok(content);
 	}
 
-    @PostMapping(path = "/contract", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/stack/contract", consumes = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity postMessage(@RequestBody List<MessageContract> contract) {
         return ResponseEntity.ok(contract);
     }
 
-    @GetMapping("fluxWithManualSubscribe")
+    @GetMapping("/stack/fluxWithManualSubscribe")
     private void fluxWithManualSubscribe() {
         Flux
                 .fromStream(Stream.generate(() -> new Random().nextInt()))
@@ -51,7 +51,7 @@ public class StackOverflowController {
                 .subscribe();
     }
 
-    @GetMapping(path = "fluxWithSpring", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(path = "/stack/fluxWithSpring", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     private Flux<Integer> fluxWithSpring() {
         return Flux
 				.fromStream(Stream.generate(() -> new Random().nextInt()))
