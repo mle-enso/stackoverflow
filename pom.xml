@@ -22,6 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>11</java.version>
+		<jmh.version>1.27</jmh.version>
 		<start-class>de.mle.stackoverflow.StackoverflowApplication</start-class>
 	</properties>
 
@@ -163,12 +164,12 @@
 		<dependency>
 			<groupId>org.openjdk.jmh</groupId>
 			<artifactId>jmh-core</artifactId>
-			<version>1.27</version>
+			<version>${jmh.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.openjdk.jmh</groupId>
 			<artifactId>jmh-generator-annprocess</artifactId>
-			<version>1.26</version>
+			<version>${jmh.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
