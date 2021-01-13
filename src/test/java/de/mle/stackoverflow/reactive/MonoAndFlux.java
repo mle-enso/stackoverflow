@@ -1,15 +1,17 @@
 package de.mle.stackoverflow.reactive;
 
-import java.time.Duration;
-import java.util.function.Supplier;
-
-import org.junit.jupiter.api.Test;
-
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.util.Pair;
+import lombok.val;
+import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+import reactor.util.function.Tuple3;
+
+import java.time.Duration;
+import java.util.function.Supplier;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 public class MonoAndFlux {
@@ -21,9 +23,9 @@ public class MonoAndFlux {
         Flux<String> xs = Flux.just("x");
 
         numbers.flatMap(i ->
-            xs.map(x -> "Mapped to " + i + x)
+                xs.map(x -> "Mapped to " + i + x)
         )
-        .subscribe(System.out::println);
+                .subscribe(System.out::println);
     }
 
     @Test
@@ -64,6 +66,34 @@ public class MonoAndFlux {
                 .doOnSuccess(it -> log.warn("onSuccess {}", it))
                 .doFinally(it -> log.warn("finally {}", it))
                 .subscribe();
+    }
+
+    @Test
+    public void defaultIfEmpty() {
+        assertThat(Mono.empty().defaultIfEmpty(3).block()).isEqualTo(3);
+    }
+
+    @Test
+    public void switchIfEmpty() {
+        assertThat(Mono.empty().switchIfEmpty(Mono.just(3)).block()).isEqualTo(3);
+    }
+
+    @Test
+    public void fluxZip() {
+        val flux = Flux.zip(Flux.just(1, 2), Flux.just(3, 4), Flux.just(5, 6, 7)).map(Tuple3::toString);
+        StepVerifier.create(flux)
+                .expectNext("[1,3,5]")
+                .expectNext("[2,4,6]")
+                .verifyComplete();
+    }
+
+    @Test
+    public void fluxMerge() {
+        val flux = Flux.merge(Flux.just(1, 2), Flux.just(3, 4), Flux.just(5, 6, 7));
+        StepVerifier.create(flux)
+                .expectSubscription()
+                .expectNext(1, 2, 3, 4, 5, 6, 7)
+                .verifyComplete();
     }
 
     @Test
