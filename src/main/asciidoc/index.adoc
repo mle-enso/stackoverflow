@@ -1,0 +1,51 @@
+= A StackOverflow helper project
+Show hints and little tutorials to others questions
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:leveloffset: 1
+:sectlinks:
+:sectnums:
+:linkattrs:
+:last-update-label!:
+
+As for now, this is just a little stub for an upcoming documentation.
+
+= An example for PlantUML integration
+
+The following diagram was created by inline PlantUML source code…
+
+[plantuml, legacy-dia, svg]
+----
+package "Legacy" #DDDDDD {
+	interface ProductCategoryInterface {
+		ProductCategoryInterface : getSymLinkCategory()
+		Long : getSymLinkCategoryId();
+	}
+
+	interface CatalogItemInterface {
+		Long : getParentId()
+	}
+
+	interface ItemInterface {
+		Long : getOid()
+	}
+
+    abstract class CatalogItem {
+		String : getId()
+	}
+
+	object category
+	object categoryLink
+
+	ProductCategory --|> ProductCategoryInterface
+    ProductCategory --|> CatalogItem
+
+	ProductCategoryInterface --|> CatalogItemInterface
+	CatalogItemInterface --|> ItemInterface
+
+	class ProductCategory
+}
+----
