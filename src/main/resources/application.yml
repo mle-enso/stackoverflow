@@ -34,3 +34,8 @@ spring:
           autoCreateTopics: false
           configuration:
             commit.interval.ms: 1000
+
+amazon:
+  s3:
+    access-key: replace
+    secret-key: replace
