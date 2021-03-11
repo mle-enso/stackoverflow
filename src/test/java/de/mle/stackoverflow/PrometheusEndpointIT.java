@@ -1,21 +1,31 @@
 package de.mle.stackoverflow;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
+
+import java.util.stream.IntStream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PrometheusEndpointIT extends IntegrationTestConfigWithPortAndTestProfile {
-    @Autowired
-    private WebTestClient webTestClient;
-
     @Test
     public void queryPrometheusEndpoint() {
-        webTestClient
+        String body = webClient.mutate().exchangeStrategies(ExchangeStrategies.builder()
+                .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(16 * 1024 * 1024)).build()).build()
                 .get()
                 .uri("/actuator/prometheus")
-                .exchange()
-                .expectStatus().isOk()
-                .returnResult(String.class)
-                .getResponseBody().blockFirst().contains("sample_count");
+                .retrieve()
+                .toEntity(String.class).block().getBody();
+
+        assertThat(body).contains("sample_count");
+
+        IntStream.range(1, 15)
+            .forEach(i -> assertThat(body).contains("attributes_size_attributes_bucket{le=\"" + i + ".0\",}"));
+        assertThat(body).contains("attributes_size_attributes_bucket{le=\"16.0\",}");
+        assertThat(body).contains("attributes_size_attributes_bucket{le=\"21.0\",}");
+        assertThat(body).contains("attributes_size_attributes_bucket{le=\"26.0\",}");
+        assertThat(body).contains("attributes_size_attributes_bucket{le=\"30.0\",}");
+        assertThat(body).contains("attributes_size_attributes_bucket{le=\"+Inf\",}");
+        assertThat(body).contains("attributes_size_attributes_max", "attributes_size_attributes_sum", "attributes_size_attributes_count");
     }
 }
