@@ -7,7 +7,6 @@ Status](https://travis-ci.org/mle-enso/stackoverflow.svg?branch=master)](https:/
 
 ![Java CI](https://github.com/mle-enso/stackoverflow/workflows/Java%20CI/badge.svg?branch=master)
 
-
 ## Start
 
 Either build the application own your own and run it…
