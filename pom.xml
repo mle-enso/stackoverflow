@@ -24,6 +24,7 @@
 		<java.version>11</java.version>
 		<jmh.version>1.29</jmh.version>
 		<start-class>de.mle.stackoverflow.StackoverflowApplication</start-class>
+		<blockhound.version>1.0.4.RELEASE</blockhound.version>
 	</properties>
 
 	<dependencyManagement>
@@ -162,6 +163,16 @@
 			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>io.projectreactor.tools</groupId>
+			<artifactId>blockhound</artifactId>
+			<version>${blockhound.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.auto.service</groupId>
+			<artifactId>auto-service</artifactId>
+			<version>1.0-rc7</version>
+		</dependency>
+		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>28.1-jre</version>
@@ -227,6 +238,12 @@
 			<version>4.0.3</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>io.projectreactor.tools</groupId>
+			<artifactId>blockhound-junit-platform</artifactId>
+			<version>${blockhound.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -242,7 +259,19 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<!-- https://github.com/reactor/BlockHound/issues/33 -->
+					<argLine>-XX:+AllowRedefinitionToAddDeleteMethods</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<!-- https://github.com/reactor/BlockHound/issues/33 -->
+					<argLine>-XX:+AllowRedefinitionToAddDeleteMethods</argLine>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.asciidoctor</groupId>
