@@ -3,7 +3,7 @@ For illustrating the solution of Stack Overflow tasks.
 
 [![GPLv3](https://img.shields.io/badge/licence-GPLv3-brightgreen.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
 
-![Java CI](https://github.com/mle-enso/stackoverflow/workflows/Java%20CI/badge.svg?branch=master)
+[![Java CI](https://github.com/mle-enso/stackoverflow/actions/workflows/maven.yml/badge.svg)](https://github.com/mle-enso/stackoverflow/actions/workflows/maven.yml)
 
 ## Start
 
