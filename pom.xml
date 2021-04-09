@@ -24,7 +24,7 @@
 		<java.version>11</java.version>
 		<jmh.version>1.29</jmh.version>
 		<start-class>de.mle.stackoverflow.StackoverflowApplication</start-class>
-		<blockhound.version>1.0.4.RELEASE</blockhound.version>
+		<blockhound.version>1.0.6.RELEASE</blockhound.version>
 	</properties>
 
 	<dependencyManagement>
