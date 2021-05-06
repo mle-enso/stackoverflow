@@ -1,18 +1,12 @@
 package de.mle.stackoverflow.async;
 
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import lombok.AccessLevel;
-import lombok.Getter;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 public class AsyncTest {
-
     private AsyncService service = new AsyncService();
 
     @Test
