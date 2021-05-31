@@ -1,6 +1,7 @@
 package de.mle.stackoverflow.kafka;
 
-import de.mle.stackoverflow.StackoverflowApplication;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -10,9 +11,11 @@ import org.springframework.cloud.stream.binder.test.TestChannelBinderConfigurati
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
+import org.springframework.test.annotation.DirtiesContext;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import de.mle.stackoverflow.StackoverflowApplication;
 
+@DirtiesContext
 public class CloudStreamWithKafkaLowLevelIT {
     @Test
     public void testMultipleFunctions() {
