@@ -11,14 +11,15 @@ import org.springframework.cloud.stream.binder.test.TestChannelBinderConfigurati
 import org.springframework.context.annotation.Import;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
-import org.springframework.test.annotation.DirtiesContext;
 
 import de.mle.stackoverflow.IntegrationTestConfigWithPortAndTestProfile;
 
-@DirtiesContext
 @Import(TestChannelBinderConfiguration.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        properties = {"spring.cloud.stream.function.definition=concatHash;concatStar", "spring.kafka.streams.application-id=abc"})
+        properties = {
+                "spring.cloud.stream.function.definition=concatHash;concatStar",
+                // define collision-free state-store directory
+                "spring.kafka.streams.application-id=second-kafka-it" })
 public class CloudStreamWithKafkaLowLevelIT extends IntegrationTestConfigWithPortAndTestProfile {
     @Autowired
     private InputDestination inputDestination;
