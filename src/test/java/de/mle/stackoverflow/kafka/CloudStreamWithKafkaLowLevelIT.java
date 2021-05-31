@@ -11,9 +11,11 @@ import org.springframework.cloud.stream.binder.test.TestChannelBinderConfigurati
 import org.springframework.context.annotation.Import;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
+import org.springframework.test.annotation.DirtiesContext;
 
 import de.mle.stackoverflow.IntegrationTestConfigWithPortAndTestProfile;
 
+@DirtiesContext
 @Import(TestChannelBinderConfiguration.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = {
