@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.annotation.DirtiesContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,6 +15,7 @@ import de.mle.stackoverflow.IntegrationTestConfigWithPortAndTestProfile;
 
 import lombok.SneakyThrows;
 
+@DirtiesContext
 public class CloudStreamWithKafkaEndToEndIT extends IntegrationTestConfigWithPortAndTestProfile {
     @Test
     void producerProcessorConsumer() {
