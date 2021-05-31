@@ -13,7 +13,7 @@ import org.springframework.messaging.Message;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CloudStreamWithKafkaTest {
+public class CloudStreamWithKafkaLowLevelIT {
     @Test
     public void testMultipleFunctions() {
         try (ConfigurableApplicationContext context = new SpringApplicationBuilder(

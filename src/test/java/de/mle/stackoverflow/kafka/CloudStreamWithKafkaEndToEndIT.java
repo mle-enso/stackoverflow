@@ -1,17 +1,20 @@
 package de.mle.stackoverflow.kafka;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import de.mle.stackoverflow.IntegrationTestConfigWithPortAndTestProfile;
-import lombok.SneakyThrows;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Objects;
+
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 
-import java.util.Objects;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import de.mle.stackoverflow.IntegrationTestConfigWithPortAndTestProfile;
 
-public class CloudStreamWithKafkaIT extends IntegrationTestConfigWithPortAndTestProfile {
+import lombok.SneakyThrows;
+
+public class CloudStreamWithKafkaEndToEndIT extends IntegrationTestConfigWithPortAndTestProfile {
     @Test
     void producerProcessorConsumer() {
         // given
