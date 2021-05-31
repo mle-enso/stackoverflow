@@ -14,6 +14,7 @@ import de.mle.stackoverflow.IntegrationTestConfigWithPortAndTestProfile;
 
 import lombok.SneakyThrows;
 
+@DirtiesContext
 public class CloudStreamWithKafkaEndToEndIT extends IntegrationTestConfigWithPortAndTestProfile {
     @Test
     void producerProcessorConsumer() {
