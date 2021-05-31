@@ -17,7 +17,8 @@ import de.mle.stackoverflow.IntegrationTestConfigWithPortAndTestProfile;
 
 @DirtiesContext
 @Import(TestChannelBinderConfiguration.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "spring.cloud.stream.function.definition=concatHash;concatStar")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        properties = {"spring.cloud.stream.function.definition=concatHash;concatStar", "spring.kafka.streams.application-id=abc"})
 public class CloudStreamWithKafkaLowLevelIT extends IntegrationTestConfigWithPortAndTestProfile {
     @Autowired
     private InputDestination inputDestination;
