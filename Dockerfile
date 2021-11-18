@@ -1,5 +1,5 @@
 FROM openjdk:17-alpine as builder
-WORKDIR application
+WORKDIR /application
 ARG JAR_FILE=target/stackoverflow-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} stackoverflow.jar
 RUN java -Djarmode=layertools -jar stackoverflow.jar extract
