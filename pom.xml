@@ -25,6 +25,8 @@
 		<jmh.version>1.33</jmh.version>
 		<start-class>de.mle.stackoverflow.StackoverflowApplication</start-class>
 		<blockhound.version>1.0.6.RELEASE</blockhound.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
 
 	<dependencyManagement>
@@ -32,7 +34,7 @@
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>2020.0.3</version>
+				<version>2020.0.4</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -108,10 +110,14 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream-binder-kafka</artifactId>
+			<!-- Remove if Spring Cloud is available in 2020.0.5 -->
+			<version>3.1.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream-binder-kafka-streams</artifactId>
+			<!-- Remove if Spring Cloud is available in 2020.0.5 -->
+			<version>3.1.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
