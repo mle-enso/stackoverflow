@@ -1,17 +1,18 @@
 package de.mle.stackoverflow.reactive;
 
-import lombok.extern.slf4j.Slf4j;
-import lombok.val;
-import org.junit.jupiter.api.Test;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import reactor.test.StepVerifier;
-import reactor.util.function.Tuple3;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.Duration;
 import java.util.function.Supplier;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
+import reactor.util.function.Tuple3;
 
 @Slf4j
 public class MonoAndFlux {
@@ -103,7 +104,7 @@ public class MonoAndFlux {
                     if (input < 3) {
                         return "tick " + input;
                     }
-                    throw new RuntimeException("boom");
+                    throw new IllegalArgumentException("boom");
                 })
                 .retry(1)
                 .elapsed()
