@@ -1,3 +1,0 @@
-spring.data:
-  elasticsearch.repositories.enabled: false
-  mongodb.uri: mongodb://localhost:27017/stack
