@@ -22,7 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>17</java.version>
-		<jmh.version>1.32</jmh.version>
+		<jmh.version>1.33</jmh.version>
 		<start-class>de.mle.stackoverflow.StackoverflowApplication</start-class>
 		<blockhound.version>1.0.6.RELEASE</blockhound.version>
 	</properties>
