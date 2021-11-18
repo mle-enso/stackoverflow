@@ -19,4 +19,3 @@ Either build the application own your own and run it…
 * `mvn clean spring-boot:build-image`
 * `mvn io.fabric8:docker-maven-plugin:start`
 * `docker run --network=host -p 8080:8080 docker.io/library/stackoverflow:0.0.1-SNAPSHOT`
-

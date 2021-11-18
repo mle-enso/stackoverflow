@@ -8,7 +8,7 @@ FROM openjdk:17-alpine
 VOLUME /tmp
 EXPOSE 8080
 USER 1001
-WORKDIR application
+WORKDIR /application
 COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
 COPY --from=builder application/snapshot-dependencies/ ./
