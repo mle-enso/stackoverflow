@@ -117,7 +117,7 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream-binder-kafka-streams</artifactId>
 			<!-- Remove if Spring Cloud is available in 2020.0.5 -->
-			<version>3.1.5</version>
+			<version>3.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
