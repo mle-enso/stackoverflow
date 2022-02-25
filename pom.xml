@@ -22,6 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>17</java.version>
+		<spring.cloud.stream.binder.kafka.version>3.2.2</spring.cloud.stream.binder.kafka.version>
 		<jmh.version>1.33</jmh.version>
 		<start-class>de.mle.stackoverflow.StackoverflowApplication</start-class>
 		<blockhound.version>1.0.6.RELEASE</blockhound.version>
@@ -34,7 +35,7 @@
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>2021.0.1</version>
+				<version>2021</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -111,13 +112,13 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream-binder-kafka</artifactId>
 			<!-- Remove if Spring Cloud is available in 2020.0.5 -->
-			<version>3.1.5</version>
+			<version>${spring.cloud.stream.binder.kafka.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream-binder-kafka-streams</artifactId>
 			<!-- Remove if Spring Cloud is available in 2020.0.5 -->
-			<version>3.1.5</version>
+			<version>${spring.cloud.stream.binder.kafka.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
