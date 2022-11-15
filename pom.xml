@@ -23,7 +23,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>17</java.version>
 		<spring.cloud.stream.binder.kafka.version>3.2.2</spring.cloud.stream.binder.kafka.version>
-		<jmh.version>1.34</jmh.version>
+		<jmh.version>1.36</jmh.version>
 		<start-class>de.mle.stackoverflow.StackoverflowApplication</start-class>
 		<blockhound.version>1.0.6.RELEASE</blockhound.version>
 		<maven.compiler.source>17</maven.compiler.source>
