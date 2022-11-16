@@ -5,12 +5,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.Duration;
 import java.util.function.Supplier;
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 import reactor.test.StepVerifier;
 import reactor.util.function.Tuple3;
 
@@ -111,6 +113,27 @@ public class MonoAndFlux {
                 .subscribe(System.out::println, System.err::println);
 
         Thread.sleep(2100);
+    }
+
+    @Test
+    public void concurrentFlatMap() throws InterruptedException {
+        Flux.range(1, 20)
+                .flatMap(i -> Mono.defer(() -> callWebService(i)).subscribeOn(Schedulers.parallel()), 5)
+                .subscribe();
+        Thread.sleep(5_000);
+    }
+
+    @SneakyThrows
+    private Mono<Integer> callWebService(final Integer i) {
+        log.info(Thread.currentThread().getName() + " for item " + i);
+        return Mono.just(i + 1).map(n -> {
+            try {
+                Thread.sleep(1_000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return n;
+        });
     }
 
     class Service {
