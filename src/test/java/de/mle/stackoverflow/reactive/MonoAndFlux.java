@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import reactor.core.publisher.Flux;
@@ -26,8 +27,8 @@ public class MonoAndFlux {
         Flux<String> xs = Flux.just("x");
 
         numbers.flatMap(i ->
-                xs.map(x -> "Mapped to " + i + x)
-        )
+                        xs.map(x -> "Mapped to " + i + x)
+                )
                 .subscribe(System.out::println);
     }
 
