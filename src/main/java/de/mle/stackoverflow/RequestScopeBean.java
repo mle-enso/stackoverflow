@@ -1,9 +1,9 @@
 package de.mle.stackoverflow;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 @RequestScope

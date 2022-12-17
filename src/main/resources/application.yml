@@ -11,7 +11,7 @@ spring:
     client-id: 74f1d32e8e1dac50232c
     client-secret: ${OAUTH_SECRET}
   data.elasticsearch:
-    repositories.enbled: true
+    repositories.enabled: true
     cluster-nodes: localhost:9300
     cluster-name: docker-cluster
   json:

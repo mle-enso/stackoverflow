@@ -1,24 +1,22 @@
 package de.mle.stackoverflow;
 
+import de.mle.stackoverflow.jackson.Project;
+import de.mle.stackoverflow.jackson.WorkPackageEstimateType;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-
-import de.mle.stackoverflow.jackson.Project;
-import de.mle.stackoverflow.jackson.WorkPackageEstimateType;
-
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 
 public class StackOverflowControllerIT extends IntegrationTestConfigWithPortAndTestProfile {
     @LocalServerPort

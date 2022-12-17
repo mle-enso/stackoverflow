@@ -34,7 +34,7 @@
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>2021.0.5</version>
+				<version>2022.0.0</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -199,9 +199,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-stream</artifactId>
-			<type>test-jar</type>
-			<classifier>test-binder</classifier>
+			<artifactId>spring-cloud-stream-test-binder</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -317,9 +315,10 @@
 					<verbose>true</verbose>
 					<removeVolumes>true</removeVolumes>
 					<allContainers>true</allContainers>
+					<startParallel>true</startParallel>
 					<images>
 						<image>
-							<name>elasticsearch:7.9.3</name>
+							<name>elasticsearch:8.5.3</name>
 							<alias>elasticsearch</alias>
 							<run>
 								<stopMode>kill</stopMode>
@@ -331,6 +330,7 @@
 									<ES_JAVA_OPTS>-Xms512m -Xmx512m</ES_JAVA_OPTS>
 									<cluster.name>docker-cluster</cluster.name>
 									<discovery.type>single-node</discovery.type>
+									<xpack.security.enabled>false</xpack.security.enabled>
 								</env>
 								<wait>
 									<time>10000</time>
