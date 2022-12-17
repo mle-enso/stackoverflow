@@ -1,14 +1,12 @@
 package de.mle.stackoverflow;
 
-import java.util.Random;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.stereotype.Component;
-
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
