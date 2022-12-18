@@ -290,7 +290,7 @@
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.40.3</version>
 				<configuration>
-					<showLogs>false</showLogs>
+					<showLogs>true</showLogs>
 					<verbose>true</verbose>
 					<removeVolumes>true</removeVolumes>
 					<allContainers>true</allContainers>
@@ -317,7 +317,7 @@
 										<method>GET</method>
 										<status>200</status>
 									</http>
-									<time>20000</time>
+									<time>30000</time>
 								</wait>
 							</run>
 						</image>
