@@ -312,7 +312,11 @@
 									<xpack.security.enabled>false</xpack.security.enabled>
 								</env>
 								<wait>
-									<time>10000</time>
+									<http>
+										<url>http://localhost:9200</url>
+										<method>GET</method>
+										<status>200</status>
+									</http>
 								</wait>
 							</run>
 						</image>
