@@ -24,6 +24,6 @@ public class BlockHoundTest {
 
             task.get(10, TimeUnit.SECONDS);
         };
-        assertThatCode(blockingInside).getCause().isInstanceOf(BlockingOperationError.class);
+        assertThatCode(blockingInside).hasCauseExactlyInstanceOf(BlockingOperationError.class);
     }
 }

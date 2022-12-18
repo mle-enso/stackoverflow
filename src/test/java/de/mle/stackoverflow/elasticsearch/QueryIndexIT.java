@@ -4,7 +4,7 @@ import de.mle.stackoverflow.IntegrationTestConfigWithPortAndTestProfile;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.client.elc.ElasticsearchTemplate;
 
 import java.util.UUID;
 
@@ -15,7 +15,7 @@ public class QueryIndexIT extends IntegrationTestConfigWithPortAndTestProfile {
     @Autowired
     private ProductRepository repo;
     @Autowired
-    private ElasticsearchRestTemplate template;
+    private ElasticsearchTemplate template;
 
     @Test
     public void queryRepo() {

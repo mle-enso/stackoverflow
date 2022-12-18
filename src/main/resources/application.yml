@@ -11,29 +11,12 @@ spring:
     client-id: 74f1d32e8e1dac50232c
     client-secret: ${OAUTH_SECRET}
   data.elasticsearch:
-    repositories.enbled: true
+    repositories.enabled: true
     cluster-nodes: localhost:9300
     cluster-name: docker-cluster
   json:
     remove.type.headers: true
     use.type.headers: false
-  cloud.stream:
-    function.definition: processor;consumer;concatHash;concatStar;process
-    bindings:
-      processor-in-0.destination: first
-      processor-out-0.destination: second
-      consumer-in-0.destination: second
-      process-in-0.destination: words
-      process-out-0.destination: counts
-    kafka:
-      default.consumer.trustedPackages: '*'
-      streams:
-        default.consumer:
-          deserializationExceptionHandler: sendToDlq
-        binder:
-          autoCreateTopics: false
-          configuration:
-            commit.interval.ms: 1000
 
 amazon:
   s3:
