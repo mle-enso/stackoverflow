@@ -290,7 +290,7 @@
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.40.3</version>
 				<configuration>
-					<showLogs>true</showLogs>
+					<showLogs>false</showLogs>
 					<verbose>true</verbose>
 					<removeVolumes>true</removeVolumes>
 					<allContainers>true</allContainers>
