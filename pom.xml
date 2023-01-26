@@ -24,7 +24,7 @@
 		<java.version>17</java.version>
 		<jmh.version>1.36</jmh.version>
 		<start-class>de.mle.stackoverflow.StackoverflowApplication</start-class>
-		<blockhound.version>1.0.6.RELEASE</blockhound.version>
+		<blockhound.version>1.0.7.RELEASE</blockhound.version>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
