@@ -1,6 +1,6 @@
 package de.mle.stackoverflow.member;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 public class Member {
 	@Resource
