@@ -10,10 +10,6 @@ spring:
   security.oauth2.client.registration.github:
     client-id: 74f1d32e8e1dac50232c
     client-secret: ${OAUTH_SECRET}
-  data.elasticsearch:
-    repositories.enabled: true
-    cluster-nodes: localhost:9300
-    cluster-name: docker-cluster
   json:
     remove.type.headers: true
     use.type.headers: false

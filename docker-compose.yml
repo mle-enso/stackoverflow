@@ -4,7 +4,6 @@ services:
     build: .
     restart: always
     depends_on:
-      - elasticsearch
       - redis
     ports:
       - "8080:8080"
@@ -18,15 +17,6 @@ services:
     image: redis
     expose:
       - 6379
-  elasticsearch:
-    image: elasticsearch:9.1.2
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    environment:
-      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
-      cluster.name: "docker-cluster"
-      discovery.type: "single-node"
   zookeeper:
     image: wurstmeister/zookeeper:latest
     ports:

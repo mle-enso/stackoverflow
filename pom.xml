@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.1</version>
+		<version>3.5.4</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -34,7 +34,7 @@
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>2022.0.1</version>
+				<version>2025.0.0</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -69,10 +69,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -225,12 +221,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<layers>
-						<enabled>true</enabled>
-						<includeLayerTools>true</includeLayerTools>
-					</layers>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -281,7 +271,12 @@
 					<dependency>
 						<groupId>org.asciidoctor</groupId>
 						<artifactId>asciidoctorj-diagram</artifactId>
-						<version>2.3.2</version>
+						<version>3.0.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.asciidoctor</groupId>
+						<artifactId>asciidoctorj-diagram-plantuml</artifactId>
+						<version>1.2025.2</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -296,31 +291,6 @@
 					<allContainers>true</allContainers>
 					<startParallel>true</startParallel>
 					<images>
-						<image>
-							<name>elasticsearch:8.5.3</name>
-							<alias>elasticsearch</alias>
-							<run>
-								<stopMode>kill</stopMode>
-								<ports>
-									<port>9200:9200</port>
-									<port>9300:9300</port>
-								</ports>
-								<env>
-									<ES_JAVA_OPTS>-Xms512m -Xmx512m</ES_JAVA_OPTS>
-									<cluster.name>docker-cluster</cluster.name>
-									<discovery.type>single-node</discovery.type>
-									<xpack.security.enabled>false</xpack.security.enabled>
-								</env>
-								<wait>
-									<http>
-										<url>http://localhost:9200</url>
-										<method>GET</method>
-										<status>200</status>
-									</http>
-									<time>30000</time>
-								</wait>
-							</run>
-						</image>
 						<image>
 							<name>mongo</name>
 							<alias>mongo</alias>
